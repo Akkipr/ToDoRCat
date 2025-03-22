@@ -20,67 +20,79 @@ struct ContentView: View {
     var body: some View {
         NavigationView{
             ZStack {
-                RoundedRectangle(cornerSize: CGSize(width: 40, height: 10))
-                    .frame(width: 400,height: 100)
-                    .foregroundColor(.gray)
-                    .opacity(0.3)
-                    .offset(x:0.0,y:-300.0)
-                RoundedRectangle(cornerSize: CGSize(width: 40, height: 10))
-                    .frame(width: 400,height: 400)
-                    .foregroundColor(.blue)
-                    .opacity(0.3)
-                    .offset(x:0.0,y:-0.0)
-                RoundedRectangle(cornerSize: CGSize(width: 40, height: 10))
-                    .frame(width: 400,height: 100)
-                    .foregroundColor(.gray)
-                    .opacity(0.3)
-                    .padding(.top)
-                    .offset(x:0.0,y:+300.0)
-                VStack (spacing: 15){
                     
-                    TextField("Email", text: $user)
-                        .padding(.leading,2)
-                        .frame(width:370, height:40)
-                        .border(.green)
-                        .cornerRadius(6.0)
-                        .font(.system(size: 20.0))
-                        .padding(.leading,1)
-                        .padding(.bottom, 45)
-                        .offset(x:0, y:-35)
-                    SecureField("Password", text: $password)
-                        .padding(.leading,2)
-                        .frame(width:370, height:40)
-                        .border(.green)
-                        .cornerRadius(6.0)
-                        .font(.system(size: 20.0))
-                        .padding(.leading,1)
-                        .offset(x:0, y:-65)
-                }
-                
-                NavigationLink(destination: LoginView()) {
-                        Text("Already Have an Account?")
-                        .frame(width: 200, height: 50)
-                        .padding(.top, 470)
-                                                
-                }
+                    
+                LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.red]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                    .edgesIgnoringSafeArea(.all)
                 
                 
-                Button("Sign up") {
-                    register()
-                    newUser.toggle()
+                VStack(spacing: 10) {
+                    
+                    
+                    Image("someupload")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width:150, height:150)
+                    
+                    Text("Welcome New User!")
+                        .padding(.top, 70)
+                        .font(.system(size: 32, weight: .bold, design: .rounded))
+                        .foregroundColor(.black)
+                        .padding(.bottom, 30)
+                
+                    
+                    
+                    VStack(spacing: 15) {
+                        TextField("Email", text: $user)
+                            .padding()
+                            .frame(width: 300, height: 50)
+                            .background(Color.white.opacity(0.2))
+                            .cornerRadius(10)
+                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.white, lineWidth: 1))
+                            .foregroundColor(.white)
+                            .autocapitalization(.none)
+                            .disableAutocorrection(true)
+                            .padding(.bottom, 20)
                         
-                }.foregroundColor(.white)
-                    .frame(width: 100, height: 50)
-                    .bold()
-                    .background(.blue)
-                    .cornerRadius(15.0)
-                    .opacity(0.7)
-                    .offset(x:0,y:310)
+                        SecureField("Password", text: $password)
+                            .padding()
+                            .frame(width: 300, height: 50)
+                            .background(Color.white.opacity(0.2))
+                            .cornerRadius(10)
+                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.white, lineWidth: 1))
+                            .foregroundColor(.white)
+                            .padding(.bottom,20)
+                    }
+                    
                 
+                    
+                    
+                    Button("Sign up") {
+                        register()
+                        newUser.toggle()
+                        
+                    }.foregroundColor(.white)
+                        .frame(width: 100, height: 50)
+                        .bold()
+                        .background(.blue)
+                        .cornerRadius(15.0)
+                        .opacity(0.7)
+                        //.offset(x:0,y:10)
+                    
+                    NavigationLink(destination: LoginView()) {
+                        Text("Already Have an Account?")
+                            .padding(.top, 80)
+                            .frame(width: 200, height: 50)
+                            //.padding(.bottom, -20)
+
+                        
+                    }
+                }
                 
                 
             }.navigationTitle("To Do List:")
-                .padding(.bottom,120)
+                //.padding(.bottom, 20)
+            
             
             .fullScreenCover(isPresented: $newUser) {
                 ListUIView()

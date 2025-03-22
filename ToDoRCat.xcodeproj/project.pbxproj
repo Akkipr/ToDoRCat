@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D28C0A882D8EA64A00E706B3 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D28C0A872D8EA64A00E706B3 /* PaywallView.swift */; };
+		D28C0A902D8ED30000E706B3 /* someupload.png in Resources */ = {isa = PBXBuildFile; fileRef = D28C0A8F2D8ED30000E706B3 /* someupload.png */; };
 		D2F777042D8BE56300E70E88 /* ToDoRCatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F777032D8BE56300E70E88 /* ToDoRCatApp.swift */; };
 		D2F777062D8BE56300E70E88 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F777052D8BE56300E70E88 /* ContentView.swift */; };
 		D2F777082D8BE56300E70E88 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F777072D8BE56300E70E88 /* Item.swift */; };
@@ -43,6 +45,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D28C0A872D8EA64A00E706B3 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
+		D28C0A8F2D8ED30000E706B3 /* someupload.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = someupload.png; sourceTree = "<group>"; };
 		D2F777002D8BE56300E70E88 /* ToDoRCat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoRCat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2F777032D8BE56300E70E88 /* ToDoRCatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoRCatApp.swift; sourceTree = "<group>"; };
 		D2F777052D8BE56300E70E88 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -111,11 +115,13 @@
 			children = (
 				D2F777032D8BE56300E70E88 /* ToDoRCatApp.swift */,
 				D2F777132D8BE58700E70E88 /* LoginView.swift */,
+				D28C0A872D8EA64A00E706B3 /* PaywallView.swift */,
 				D2F777052D8BE56300E70E88 /* ContentView.swift */,
 				D2F7774A2D8BE9B800E70E88 /* ListUIView.swift */,
 				D2F777072D8BE56300E70E88 /* Item.swift */,
 				D2F7774C2D8BEA9600E70E88 /* Storage.swift */,
 				D2F777172D8BE7E800E70E88 /* GoogleService-Info.plist */,
+				D28C0A8F2D8ED30000E706B3 /* someupload.png */,
 				D2F777092D8BE56500E70E88 /* Assets.xcassets */,
 				D2F7770B2D8BE56500E70E88 /* Preview Content */,
 			);
@@ -219,6 +225,7 @@
 			files = (
 				D2F7770D2D8BE56500E70E88 /* Preview Assets.xcassets in Resources */,
 				D2F7770A2D8BE56500E70E88 /* Assets.xcassets in Resources */,
+				D28C0A902D8ED30000E706B3 /* someupload.png in Resources */,
 				D2F777182D8BE7E800E70E88 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -230,6 +237,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D28C0A882D8EA64A00E706B3 /* PaywallView.swift in Sources */,
 				D2F777062D8BE56300E70E88 /* ContentView.swift in Sources */,
 				D2F7774B2D8BE9B800E70E88 /* ListUIView.swift in Sources */,
 				D2F777082D8BE56300E70E88 /* Item.swift in Sources */,

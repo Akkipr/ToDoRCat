@@ -8,11 +8,31 @@
 import SwiftUI
 
 struct PaywallView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
+    @State private var isSubscribed = false
+    @Binding var vary: Bool
 
-#Preview {
-    PaywallView()
+    
+    var body: some View {
+        VStack(spacing: 20) {
+            Text("🚀 Upgrade to Pro!")
+                .font(.largeTitle)
+                .bold()
+            
+            Text("Get premium features for free in this test mode.")
+                .padding()
+            
+            Button("Subscribe") {
+                isSubscribed = true
+            }
+            .buttonStyle(.borderedProminent)
+            .padding()
+            .alert("Thanks for Upgrading!", isPresented: $isSubscribed) {
+                Button("OK", role: .cancel) {}
+            }
+            
+            Button("Cancel") {
+                vary.toggle()
+            }
+        }
+    }
 }

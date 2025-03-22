@@ -15,95 +15,67 @@ struct ListUIView: View {
    @State private var selectedTask: String? = nil
    @State private var showMenu: Bool = false
     @State private var score: Int = 0
-    @State private var vary: Bool = true
+    @State var vary: Bool = false
     
     let db = Firestore.firestore()
     
     var body: some View {
-           ZStack {
-               VStack {
-                   Text("To-Do List")
-                       .font(.largeTitle)
-                       .padding()
-                   
-                   TextField("Enter a task", text: $newTask)
-                       .textFieldStyle(RoundedBorderTextFieldStyle())
-                       .padding()
-                   
-                   Button("Add Task") {
-                       if tasks.count < 5, !newTask.isEmpty {
-                           tasks.append(newTask)
-                           booleans.append(false) // Append a false value for each new task
-                           newTask = ""
-                           saveTasksToFirestore()
-                           
-                           
-                       }
-                   }
-                   .disabled(tasks.count >= 5 || newTask.isEmpty)
-                   .padding()
-                   
-                   List {
-                       ForEach(tasks.indices, id: \.self) { index in
-                           HStack {
-                               Button {
-                                   // Toggle the boolean value at the corresponding index in booleans
-                                   booleans[index].toggle()
-                                   saveTasksToFirestore()
-                               } label: {
-                                   Image(systemName: booleans[index] ? "checkmark.circle.fill" : "circle")
-                               }
-                               
-                               Text(tasks[index])
-                           }
-                       }.onDelete { indexSet in
-                           tasks.remove(atOffsets: indexSet)
-                       }
-                   }
-               }
-               .padding()
-           
-           if showMenu {
-               VStack {
-                   Spacer()
-                   VStack {
-                       Button {
-                           if let task = selectedTask {
-                               delete(task: task)
+        ZStack {
+            VStack {
+                Text("To-Do List")
+                    .font(.largeTitle)
+                    .padding()
+                
+                TextField("Enter a task", text: $newTask)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
+                
+                Button("Add Task") {
+                    if tasks.count < 5, !newTask.isEmpty {
+                        tasks.append(newTask)
+                        booleans.append(false) // Append a false value for each new task
+                        newTask = ""
+                        saveTasksToFirestore()
+                        
+                        
+                    }
+                    if tasks.count >= 5 {
+                        vary.toggle()
+                    }
+                    
+                }
+                .disabled(newTask.isEmpty)
+                .fullScreenCover(isPresented: $vary) {
+                    PaywallView(vary: $vary)
+                }
+                
+                
+                List {
+                    ForEach(tasks.indices, id: \.self) { index in
+                        HStack {
+                            Button {
+                                // Toggle the boolean value at the corresponding index in booleans
+                                booleans[index].toggle()
+                                saveTasksToFirestore()
+                            } label: {
+                                Image(systemName: booleans[index] ? "checkmark.circle.fill" : "circle")
                             }
-                           withAnimation {
-                               showMenu = false
-                           }
-                       } label: {
-                           Text("Delete")
-                               .padding()
-                       }
-                       .frame(width: 130, height: 45)
-                       .background(.red)
-                       .tint(.white)
-                       .clipShape(RoundedRectangle(cornerRadius: 9))
-                       //.padding()
-                       
-
-                       Button("Close") {
-                           withAnimation {
-                               showMenu = false
-                           }
-                       }
-                       .padding()
-                       
-                   }
-                   .frame(maxWidth: .infinity)
-                   .frame(height: 200)
-                   .background(Color.white)
-                   .cornerRadius(20)
-                   .shadow(radius: 10)
-                   .transition(.move(edge: .bottom))
-               }
-               .edgesIgnoringSafeArea(.bottom)
-           }
-       }
-           .onAppear {
+                            
+                            Text(tasks[index])
+                        }
+                    }.onDelete { indexSet in
+                        if let index = indexSet.first {  // Get the first (or only) index
+                            deleteTasks(index)
+                        }
+                        tasks.remove(atOffsets: indexSet)
+                        saveTasksToFirestore()
+                        loadTasksFromFirestore()
+                    }
+                }
+            }
+            .padding()
+            
+        }.onAppear {
                if Auth.auth().currentUser != nil {
                    print("🔍 Loading tasks from Firestore...")
                    loadTasksFromFirestore()
@@ -112,10 +84,16 @@ struct ListUIView: View {
                }
            }
    }
-    func delete(task: String) {
-        if let index = tasks.firstIndex(of: task) {
-            tasks.remove(at: index)
-            saveTasksToFirestore()
+    func deleteTasks(_ idx:Int) {
+        guard let user = Auth.auth().currentUser else { return }
+        
+        let userTasksRef = db.collection("users").document(user.uid).collection("tasks")
+
+        for (index, _) in tasks.enumerated() {
+            let taskDocument = userTasksRef.document("\(index)")
+            if idx==index {
+                taskDocument.delete()
+            }
         }
     }
     
@@ -125,7 +103,7 @@ struct ListUIView: View {
         let userTasksRef = db.collection("users").document(user.uid).collection("tasks")
 
         for (index, task) in tasks.enumerated() {
-            let taskDocument = userTasksRef.document("\(index)") // Unique ID for each task
+            let taskDocument = userTasksRef.document("\(index)") 
             
             taskDocument.setData([
                 "task": task,
