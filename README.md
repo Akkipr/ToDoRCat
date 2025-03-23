@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="ToDoRCat/Assets.xcassets/homescreen.png" width="150px" height="150px"/>
+  <img src="ToDoRCat/Assets.xcassets/homescreen.png" width="100px" height="200px"/>
 </p>
 
 <div align="center">
@@ -8,8 +8,8 @@
 </div>
 
 <p align="center">
-  <img src="screenshot1.png" width="275px" height="250px"/>
-  <img src="screenshot2.png" width="275px" height="250px"/>
+  <img src="ToDoRCat/Assets.xcassets/welcomeback.png" width="100" height="200px"/>
+  <img src="ToDoRCat/Assets.xcassets/todo" width="100px" height="200px"/>
 </p>
 
 ## 🚀 Features
