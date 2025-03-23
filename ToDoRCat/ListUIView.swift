@@ -28,12 +28,12 @@ struct ListUIView: View {
                 
                 TextField("Enter a task", text: $newTask)
                     //.textFieldStyle(RoundedBorderTextFieldStyle())
-
+                    .padding()
                     .frame(width: 300, height: 40)
-                    .background(Color.white.opacity(0.2))
+                    .background(Color.black.opacity(0.2))
                     .cornerRadius(10)
                     .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.white, lineWidth: 1))
-                    .foregroundColor(.white)
+                    .foregroundColor(.gray)
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
                     .padding()
@@ -41,7 +41,7 @@ struct ListUIView: View {
                 Button("Add Task") {
                     if (tasks.count < 5 && !newTask.isEmpty) || (isSubscribed2 == 1 && !newTask.isEmpty)  {
                         tasks.append(newTask)
-                        booleans.append(false) // Append a false value for each new task
+                        booleans.append(false)
                         newTask = ""
                         saveTasksToFirestore()
                         
@@ -62,7 +62,6 @@ struct ListUIView: View {
                     ForEach(tasks.indices, id: \.self) { index in
                         HStack {
                             Button {
-                                // Toggle the boolean value at the corresponding index in booleans
                                 booleans[index].toggle()
                                 saveTasksToFirestore()
                             } label: {
@@ -72,7 +71,7 @@ struct ListUIView: View {
                             Text(tasks[index])
                         }
                     }.onDelete { indexSet in
-                        if let index = indexSet.first {  // Get the first (or only) index
+                        if let index = indexSet.first {
                             deleteTasks(index)
                         }
                         tasks.remove(atOffsets: indexSet)
@@ -85,10 +84,10 @@ struct ListUIView: View {
             
         }.onAppear {
                if Auth.auth().currentUser != nil {
-                   print("🔍 Loading tasks from Firestore...")
+                   print("load complete")
                    loadTasksFromFirestore()
                } else {
-                   print("❌ User is not logged in!")
+                   print("not logged in")
                }
            }
    }
@@ -118,9 +117,9 @@ struct ListUIView: View {
                 "completed": booleans[index]
             ]) { error in
                 if let error = error {
-                    print("❌ Error saving task: \(error.localizedDescription)")
+                    print("error: \(error.localizedDescription)")
                 } else {
-                    print("✅ Task saved successfully: \(task)")
+                    print("task saved: \(task)")
                 }
             }
         }
@@ -133,12 +132,12 @@ struct ListUIView: View {
 
         userTasksRef.getDocuments { (snapshot, error) in
             if let error = error {
-                print("❌ Error loading tasks: \(error.localizedDescription)")
+                print("error: \(error.localizedDescription)")
                 return
             }
             
             guard let documents = snapshot?.documents else {
-                print("⚠️ No tasks found")
+                print("no tasks found")
                 return
             }
             
@@ -153,7 +152,7 @@ struct ListUIView: View {
                 }
             }
             
-            print("✅ Loaded tasks: \(self.tasks)")
+            print("loadded tasks: \(self.tasks)")
         }
     }
 }
