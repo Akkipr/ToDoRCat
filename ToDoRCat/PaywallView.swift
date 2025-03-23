@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct PaywallView: View {
-    @State private var isSubscribed = false
+    @State var isSubscribed = false
     @Binding var vary: Bool
 
     
     var body: some View {
         VStack(spacing: 20) {
-            Text("🚀 Upgrade to Pro!")
+            Text("🚀 You have reached your limit!")
                 .font(.largeTitle)
                 .bold()
             
@@ -23,6 +23,7 @@ struct PaywallView: View {
             
             Button("Subscribe") {
                 isSubscribed = true
+                isSubscribed2 = 1
             }
             .buttonStyle(.borderedProminent)
             .padding()
@@ -33,6 +34,13 @@ struct PaywallView: View {
             Button("Cancel") {
                 vary.toggle()
             }
+            
+            .fullScreenCover(isPresented: $isSubscribed) {
+                ListUIView()
+                    
+            }
+            
+            
         }
     }
 }

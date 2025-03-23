@@ -27,11 +27,19 @@ struct ListUIView: View {
                     .padding()
                 
                 TextField("Enter a task", text: $newTask)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    //.textFieldStyle(RoundedBorderTextFieldStyle())
+
+                    .frame(width: 300, height: 40)
+                    .background(Color.white.opacity(0.2))
+                    .cornerRadius(10)
+                    .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.white, lineWidth: 1))
+                    .foregroundColor(.white)
+                    .autocapitalization(.none)
+                    .disableAutocorrection(true)
                     .padding()
                 
                 Button("Add Task") {
-                    if tasks.count < 5, !newTask.isEmpty {
+                    if (tasks.count < 5 && !newTask.isEmpty) || (isSubscribed2 == 1 && !newTask.isEmpty)  {
                         tasks.append(newTask)
                         booleans.append(false) // Append a false value for each new task
                         newTask = ""
@@ -39,7 +47,7 @@ struct ListUIView: View {
                         
                         
                     }
-                    if tasks.count >= 5 {
+                    if tasks.count >= 5 && isSubscribed2 == 0 {
                         vary.toggle()
                     }
                     

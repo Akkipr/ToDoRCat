@@ -12,6 +12,7 @@ import FirebaseCore
 import FirebaseFirestore
 import FirebaseAuth
 
+var isSubscribed2: Int = 0
 @main
 struct ToDoRCatApp: App {
     @StateObject var storage = Storage()

@@ -17,8 +17,11 @@ struct ContentView: View {
     @State private var user = ""
     @State private var password = ""
     @State private var newUser = false
+    @State private var errorMessage: String? = nil
+    
     var body: some View {
         NavigationView{
+            
             ZStack {
                     
                     
@@ -32,7 +35,7 @@ struct ContentView: View {
                     Image("someupload")
                         .resizable()
                         .scaledToFit()
-                        .frame(width:150, height:150)
+                        .frame(width:200, height:200)
                     
                     Text("Welcome New User!")
                         .padding(.top, 70)
@@ -64,12 +67,22 @@ struct ContentView: View {
                             .padding(.bottom,20)
                     }
                     
-                
+                    if let error = errorMessage {
+                        Text(error)
+                            .foregroundColor(.red)
+                            .padding()
+                    }
                     
                     
                     Button("Sign up") {
-                        register()
-                        newUser.toggle()
+                        if (!user.isEmpty && !password.isEmpty) {
+                            register()
+                            newUser.toggle()
+                            errorMessage = nil
+                        }else {
+                            
+                            errorMessage = "Invalid Entry"
+                        }
                         
                     }.foregroundColor(.white)
                         .frame(width: 100, height: 50)
